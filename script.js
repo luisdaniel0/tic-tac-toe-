@@ -57,7 +57,22 @@ const gameController = (function(){
     }
 
 
-    function playRound(index){}
+    function playRound(index){
+        if(gameOver===true){
+            return false
+        }
+        if(!gameboard.setCell(index, currentPlayer.mark)){
+            return false
+        }
+        if(checkWin()===true){
+            gameOver= true
+            return "win"
+        }
+        if(!gameboard.getBoard().includes("")){
+            gameOver= true
+            return "tie"
+        }
+    }
     function getCurrentPlayer(){
         console.log(currentPlayer)
     }
