@@ -72,11 +72,36 @@ const gameController = (function(){
             gameOver= true
             return "tie"
         }
+        currentPlayer = currentPlayer ===players[0] ? players[1] : players[0]
+        return true
     }
+
+    
     function getCurrentPlayer(){
         console.log(currentPlayer)
     }
-    function checkWin(){}
+    function checkWin(){
+        console.log("checkWin() has been called!");
+
+        const board = gameboard.getBoard();
+        const mark  = currentPlayer.mark;
+
+        //all possible winning index combinations
+        const winCombos = [
+            [0,1,2],
+            [3,4,5],
+            [6,7,8],
+            [0,3,6],
+            [1,4,7],
+            [2,5,8],
+            [0,4,8],
+            [2,4,6]
+        ]
+
+        return winCombos.some(combo=>
+            combo.every(index=>board[index]===mark)
+        )
+    }
     function restart(){}
 
     return {start,playRound,getCurrentPlayer,checkWin,restart}
