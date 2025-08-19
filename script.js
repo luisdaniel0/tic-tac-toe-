@@ -15,6 +15,10 @@ const Gameboard =  (function(){
             boardHTML +=`<div class="square" id="square-${index}">${square}</div>`
             gameBoardDiv.innerHTML = boardHTML
         })
+        const squares = document.querySelectorAll('.square')
+        squares.forEach((element)=>{
+            element.addEventListener("click",Game.handleClick)
+        })
     }
    
     return{render}
@@ -23,6 +27,7 @@ const Gameboard =  (function(){
 
 // Gameboard.render();
 
+//createplayer function factory
 const createPlayer = (name,mark)=>{
     return{
         name,
@@ -47,9 +52,26 @@ const Game = (function(){
         Gameboard.render();
     }
 
-    return{start}
+    const handleClick = (event)=>{
+        
+        let index = parseInt(event.target.id.split("-")[1]);
+        console.log(index)
+      
+    }
+
+    return{start, handleClick}
 })();
 
+
+//you need to know where exactly in the board did the player clicked so u can set win conditions based on this array
+////           [0,1,2],
+//             [3,4,5],
+//             [6,7,8],
+//             [0,3,6],
+//             [1,4,7],
+//             [2,5,8],
+//             [0,4,8],
+//             [2,4,6]
 
 
 

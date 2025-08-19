@@ -1,0 +1,27 @@
+.board{
+    display:flex;
+    flex-wrap: wrap;
+    height: 300px;
+    justify-content: center;
+    align-content: center;
+}
+
+.square{
+    display: flex;
+    border:1px solid black;
+    width:25%;
+    height:30%;
+}
+
+.control-panel{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    gap: 15px;
+}
+
+.results{
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
