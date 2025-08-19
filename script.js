@@ -20,8 +20,15 @@ const Gameboard =  (function(){
             element.addEventListener("click",Game.handleClick)
         })
     }
+
+    const updateBoard = (index,mark) =>{
+        console.log(board[index])
+        board[index] = mark //update the array
+        render();
+        
+    }
    
-    return{render}
+    return{render,updateBoard}
 
 })();
 
@@ -45,7 +52,7 @@ const Game = (function(){
     const start= () =>{
         players= [
             createPlayer(document.querySelector('#player-1').value, "X"),
-            createPlayer(document.querySelector('#player-2')).value, "O"
+            createPlayer(document.querySelector('#player-2').value, "O")
         ]
         currentPlayerIndex= 0
         gameOver=false;
@@ -53,15 +60,25 @@ const Game = (function(){
     }
 
     const handleClick = (event)=>{
-        
         let index = parseInt(event.target.id.split("-")[1]);
         console.log(index)
+
+        if(!event.target.textContent){
+            const mark = players[currentPlayerIndex].mark;
+            Gameboard.updateBoard(index, mark);
+            currentPlayerIndex = 1 - currentPlayerIndex;
+        }
       
     }
 
     return{start, handleClick}
 })();
 
+
+/*   
+    TODO
+    everytime a square is clicked, update the board to X or O 
+*/
 
 //you need to know where exactly in the board did the player clicked so u can set win conditions based on this array
 ////           [0,1,2],
