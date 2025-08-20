@@ -43,11 +43,12 @@ const Gameboard =  (function(){
             let c = combo[2];
             console.log(board)
             if(board[a] !=="" && board[a]===board[b] && board[a] ===board[c]){
-                console.log(a)
+                console.log(board[a])
                 return board[a];
-            }
-            
-
+            } 
+        }
+        if(board.every(cell=>cell!=="")){
+            alert("its a tie!")
         }
         return null;
     }
@@ -104,7 +105,8 @@ const Game = (function(){
             if(winner){
                 gameOver=true;
                 alert(`${winner} wins!`)
-            }
+            } 
+
         }
       
     }
