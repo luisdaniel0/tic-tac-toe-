@@ -5,16 +5,11 @@ startButton.addEventListener('click', ()=>{
 })
 
 const restartButton = document.querySelector('#restart-btn')
-restartButton.addEventListener("click",()=>{
-    for(let i=0; i < Gameboard.getBoard().length;i++){
-        console.log(Gameboard.getBoard()[i])
-        Gameboard.getBoard()[i]="";
-    }
-    gameOver=false;
-    currentPlayerIndex=0;
-    Gameboard.render()
-    
-})
+        restartButton.addEventListener("click", ()=>{
+            Game.restart();
+        })
+
+const resultMessage = document.querySelector('.results')
 
 
 const Gameboard =  (function(){
@@ -59,7 +54,7 @@ const Gameboard =  (function(){
             } 
         }
         if(board.every(cell=>cell!=="")){
-            alert("its a tie!")
+            resultMessage.textContent= "It's a tie!"
         }
         return null;
     }
@@ -122,8 +117,20 @@ const Game = (function(){
       
     }
 
-    return{start, handleClick,}
+    const restart=()=>{
+         let board = Gameboard.getBoard();
+        for(let i=0; i<board.length; i++){
+            board[i] = "";
+        }
+        currentPlayerIndex = 0;
+        gameOver = false;
+        resultMessage.textContent = "";
+        Gameboard.render();
+    }
+
+    return{start, handleClick,restart}
 })();
 
-// add event listener to restart button that restarts the entire game (resets the board)
+
 // add player 1 and player 2 names to X and O respectively
+// manipulate the dom to display who won on the result div 
