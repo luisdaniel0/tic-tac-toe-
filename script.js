@@ -44,11 +44,11 @@ const Gameboard =  (function(){
 
         for(let i=0; i < winCombos.length;i++){
             let combo = winCombos[i]
-            console.log(combo)
+            
             let a = combo[0];
             let b = combo[1];
             let c = combo[2];
-            console.log(board)
+            
             if(board[a] !=="" && board[a]===board[b] && board[a] ===board[c]){
                 return board[a];
             } 
@@ -90,6 +90,8 @@ const Game = (function(){
         ]
         currentPlayerIndex= 0
         gameOver=false;
+        document.querySelector('.player-names').textContent = 
+        `${players[0].name} (X) vs ${players[1].name} (O)`;
         Gameboard.render();
     }
 
@@ -99,7 +101,7 @@ const Game = (function(){
         if(gameOver) return;
         
         let index = parseInt(event.target.id.split("-")[1]);
-        // console.log(index)
+        
 
         if(!event.target.textContent){
             const mark = players[currentPlayerIndex].mark;
@@ -107,11 +109,15 @@ const Game = (function(){
 
             
             currentPlayerIndex = 1 - currentPlayerIndex;
-            const winner = Gameboard.checkWinner(Gameboard.getBoard());
-            if(winner){
-                gameOver=true;
-                alert(`${winner} wins!`)
-            } 
+           const winnerMark = Gameboard.checkWinner(Gameboard.getBoard());
+        if(winnerMark){
+            gameOver = true;
+            const winnerName = players.find(p => p.mark === winnerMark).name;
+            resultMessage.textContent = `${winnerName} wins!`;
+        } else if (Gameboard.getBoard().every(cell => cell !== "")) {
+            resultMessage.textContent = "It's a tie!";
+            gameOver = true;
+        }
 
         }
       
@@ -133,4 +139,5 @@ const Game = (function(){
 
 
 // add player 1 and player 2 names to X and O respectively
+// add winner to results
 // manipulate the dom to display who won on the result div 
