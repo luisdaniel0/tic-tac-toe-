@@ -22,13 +22,40 @@ const Gameboard =  (function(){
     }
 
     const updateBoard = (index,mark) =>{
-        console.log(board[index])
         board[index] = mark //update the array
         render();
         
     }
+
+    const checkWinner = (board)=>{
+        const winCombos = [
+            [0,1,2],[3,4,5],
+            [6,7,8],[0,3,6],
+            [1,4,7],[2,5,8],
+            [0,4,8],[2,4,6]
+        ]
+
+        for(let i=0; i < winCombos.length;i++){
+            let combo = winCombos[i]
+            console.log(combo)
+            let a = combo[0];
+            let b = combo[1];
+            let c = combo[2];
+            console.log(board)
+            if(board[a] !=="" && board[a]===board[b] && board[a] ===board[c]){
+                console.log(a)
+                return board[a];
+            }
+            
+
+        }
+        return null;
+    }
+
+    const getBoard = () => board;
+
    
-    return{render,updateBoard}
+    return{render,updateBoard,checkWinner,getBoard}
 
 })();
 
@@ -59,25 +86,36 @@ const Game = (function(){
         Gameboard.render();
     }
 
+    
+
     const handleClick = (event)=>{
+        if(gameOver) return;
+        
         let index = parseInt(event.target.id.split("-")[1]);
-        console.log(index)
+        // console.log(index)
 
         if(!event.target.textContent){
             const mark = players[currentPlayerIndex].mark;
             Gameboard.updateBoard(index, mark);
+
+            
             currentPlayerIndex = 1 - currentPlayerIndex;
+            const winner = Gameboard.checkWinner(Gameboard.getBoard());
+            if(winner){
+                gameOver=true;
+                alert(`${winner} wins!`)
+            }
         }
       
     }
 
-    return{start, handleClick}
+    return{start, handleClick,}
 })();
 
 
 /*   
     TODO
-    everytime a square is clicked, update the board to X or O 
+    set a win condition for the game based on winCon array and display who won in results message
 */
 
 //you need to know where exactly in the board did the player clicked so u can set win conditions based on this array
@@ -89,7 +127,6 @@ const Game = (function(){
 //             [2,5,8],
 //             [0,4,8],
 //             [2,4,6]
-
 
 
 
